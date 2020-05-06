@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "216631102523",
+    "firebase_url": "https://languagecards-eaac6.firebaseio.com",
+    "project_id": "languagecards-eaac6",
+    "storage_bucket": "languagecards-eaac6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216631102523:android:d544c4c5a96942dd81e01e",
+        "android_client_info": {
+          "package_name": "com.SoloDev.language_cards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216631102523-98kmjbllfbm787a7qjqb0bhl5l67k9ke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXXNxRN_zPp6MqUabp4Tf2L5mTmFAX3n0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216631102523-98kmjbllfbm787a7qjqb0bhl5l67k9ke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
