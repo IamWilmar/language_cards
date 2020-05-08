@@ -1,11 +1,22 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:language_cards/src/bloc/colletion_bloc.dart';
 import 'package:language_cards/src/models/words_model.dart';
 import 'package:language_cards/src/services/database.dart';
+import 'package:admob_flutter/admob_flutter.dart';
+import 'package:language_cards/src/services/admob_service.dart';
 
-class WordCardsPage extends StatelessWidget {
+class WordCardsPage extends StatefulWidget {
+  static final String routeName = 'wordsPage';
+
+  @override
+  _WordCardsPageState createState() => _WordCardsPageState();
+}
+
+class _WordCardsPageState extends State<WordCardsPage> {
   final List<Color> colorList = <Color>[
     Color(0xFFFF7725),
     Color(0xFF612CAD),
@@ -21,14 +32,23 @@ class WordCardsPage extends StatelessWidget {
     Color(0xFF000000),
   ];
 
-  static final String routeName = 'wordsPage';
+  final AdMobService admobService = AdMobService();
+
+  @override
+  void initState() {
+    super.initState();
+    Admob.initialize(admobService.getAdMobAppId());
+  }
+
   final CollectionBloc collectionBloc = CollectionBloc();
+
   final DatabaseService fireStoreDb = DatabaseService();
+
   final CollectionReference wordsColletion =
       Firestore.instance.collection('words');
- 
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
- 
+
   @override
   Widget build(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
@@ -57,16 +77,57 @@ class WordCardsPage extends StatelessWidget {
       stream: fireStoreDb.obtenerPalabras(uid, collection),
       builder:
           (BuildContext context, AsyncSnapshot<List<WordsModel>> snapshot) {
-        if (!snapshot.hasData) return Center(child:CircularProgressIndicator(strokeWidth: 6.0));
+        if (!snapshot.hasData)
+          return Center(child: CircularProgressIndicator(strokeWidth: 6.0));
         List<WordsModel> words = snapshot.data;
-        return Swiper(        
-          layout: SwiperLayout.TINDER,
-          itemCount: words.length,
-          itemWidth: _screenSize.width * 0.9,
-          itemHeight: _screenSize.height * 0.4,
-          itemBuilder: (BuildContext context, int index) {
-            return _cardContent(context, words, _screenSize, index);
-          },
+        return Stack(
+          children: <Widget>[
+            _swiperCard(words, _screenSize),
+            _adBox(_screenSize),
+          ],
+        );
+      },
+    );
+  }
+
+  Container _adBox(Size _screenSize) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10.0,
+            spreadRadius: 3.0,
+            offset: Offset(2.0, 10.0),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.only(left: 2, top: 5.0, bottom: 5.0, right: 9),
+      margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      width: _screenSize.width * 1,
+      height: _screenSize.height * 0.15,
+      child: AdmobBanner(        
+        adUnitId: admobService.getBannerAdId(),
+        adSize: AdmobBannerSize.FULL_BANNER,
+      ),
+    );
+  }
+
+  Swiper _swiperCard(List<WordsModel> words, Size _screenSize) {
+    return Swiper(
+      viewportFraction: 4.0,
+      layout: SwiperLayout.TINDER,
+      itemCount: words.length,
+      itemWidth: _screenSize.width * 1,
+      itemHeight: _screenSize.height * 0.4,
+      itemBuilder: (BuildContext context, int index) {
+        return _cardContent(
+          context,
+          words,
+          _screenSize,
+          index,
         );
       },
     );
@@ -75,23 +136,30 @@ class WordCardsPage extends StatelessWidget {
   Widget _cardContent(BuildContext context, List<WordsModel> words,
       Size screenSize, int index) {
     int r = index;
-    int i = 0;
-    if (r > colorList.length) {
-      r = colorList.length--;
-    }
-    if (r == 0) {
-      r = i++;
+    if (index > colorList.length - 1) {
+      colorList.add(colorList[r = 0 + Random().nextInt(colorList.length - 0)]);
+    } else {
+      r = index;
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(20.0),
       child: GestureDetector(
         onTap: () {
           _mostrarSnackBar(context, words[index].wordEs, colorList[r]);
+          print(r);
         },
         child: Container(
           decoration: BoxDecoration(
             color: colorList[r],
             borderRadius: BorderRadius.circular(20.0),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                spreadRadius: 3.0,
+                offset: Offset(2.0, 10.0),
+              ),
+            ],
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -119,17 +187,21 @@ class WordCardsPage extends StatelessWidget {
     );
   }
 
-  void _mostrarSnackBar( BuildContext context, String wordEs, Color color) {
+  void _mostrarSnackBar(BuildContext context, String wordEs, Color color) {
     final snackbar = SnackBar(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0)),
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0)),
       ),
       elevation: 0.0,
       backgroundColor: color,
-      content: Text(wordEs, style:Theme.of(context).textTheme.subhead, textAlign: TextAlign.center,),
-      duration: Duration(milliseconds:1000),
+      content: Text(
+        wordEs,
+        style: Theme.of(context).textTheme.subhead,
+        textAlign: TextAlign.center,
+      ),
+      duration: Duration(milliseconds: 1000),
     );
     scaffoldKey.currentState.showSnackBar(snackbar);
   }
-
 }

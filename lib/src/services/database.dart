@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:language_cards/src/models/verbs_model.dart';
 import 'package:language_cards/src/models/words_model.dart';
 
 class DatabaseService {
@@ -25,11 +26,33 @@ class DatabaseService {
     }).toList();
   }
 
+  List<VerbsModel> _verbsListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      VerbsModel word = VerbsModel(
+        example: doc.data['example'] ?? '',
+        infinitive: doc.data['infinitive'] ?? '',
+        pastParticiple: doc.data['past_participle'] ?? '',
+        simplePast: doc.data['simple_past'] ?? '',
+        verbEs: doc.data['verb_es'] ?? '',
+      );
+      print(word);
+      return word;
+    }).toList();
+  }
+
   Stream<List<WordsModel>> obtenerPalabras(String id, String collection) {
     return wordsColletion
         .document(id)
         .collection(collection)
         .snapshots()
         .map(_wordsListFromSnapshot);
+  }
+
+  Stream<List<VerbsModel>> obtenerVerbos(String id, String collection) {
+    return wordsColletion
+        .document(id)
+        .collection(collection)
+        .snapshots()
+        .map(_verbsListFromSnapshot);
   }
 }

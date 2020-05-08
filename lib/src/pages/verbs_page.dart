@@ -1,73 +1,53 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:language_cards/src/bloc/colletion_bloc.dart';
-import 'package:language_cards/src/pages/word_cards_page.dart';
+import 'package:language_cards/src/pages/verbs_card_page.dart';
+import 'package:language_cards/src/services/database.dart';
 
-class LessonsPage extends StatelessWidget {
-
+class VerbsPage extends StatelessWidget {
+  final DatabaseService firestoreDb = DatabaseService();
+  final uid = 'yE9F2SLjR9ryF5msZEEq';
+  final collection = 'verbs';
   final CollectionBloc collectionBloc = CollectionBloc();
-  
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           //_botonesRedondeados(context),
-          SizedBox(height:20),
-          _lessonVault(context),
+          SizedBox(height: 20),
+          _verbsVault(context),
         ],
       ),
     );
   }
 
-  Widget _lessonVault(BuildContext context) {
+  Widget _verbsVault(BuildContext context) {
     return Wrap(
       direction: Axis.horizontal,
       children: <Widget>[
         _crearBotonRedondeado(
           context,
-          Colors.green,
-          Icons.bubble_chart,
-          "Nature",
-          'fruits',
+          Colors.teal,
+          Icons.translate,
+          "Verbs",
+          'verbs',
         ),
-        _crearBotonRedondeado(
-          context,
-          Colors.orange,
-          Icons.business,
-          "City Life",
-          'city',
-        ),
-        _crearBotonRedondeado(
-          context,
-          Colors.purple,
-          Icons.people,
-          "People",
-          'people',
-        ),
-        _crearBotonRedondeado(
-          context,
-          Colors.red,
-          Icons.comment,
-          "Communication",
-          'communication',
-        ),
-        SizedBox(height:300)
+        SizedBox(height: 300)
       ],
     );
   }
 
-  Widget _crearBotonRedondeado(
-      BuildContext context, Color color, IconData icon, String texto, String collection) {
+  Widget _crearBotonRedondeado(BuildContext context, Color color, IconData icon,
+      String texto, String collection) {
     final _screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         print("item touched");
         collectionBloc.setCollection(collection);
-        Navigator.pushNamed(context, WordCardsPage.routeName);
+        Navigator.pushNamed(context, VerbsCardPage.routeName);
       },
       child: Container(
-        width: _screenSize.width*0.4,
+        width: _screenSize.width * 0.4,
         height: _screenSize.height * 0.25,
         margin: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
@@ -76,7 +56,7 @@ class LessonsPage extends StatelessWidget {
               color: Colors.black26,
               blurRadius: 10.0,
               spreadRadius: 3.0,
-              offset: Offset(2.0,10.0),
+              offset: Offset(2.0, 10.0),
             ),
           ],
           borderRadius: BorderRadius.circular(20.0),
@@ -103,5 +83,6 @@ class LessonsPage extends StatelessWidget {
       ),
     );
   }
-
 }
+
+//width: screenSize.width * 0.85,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:language_cards/src/pages/lessons_page.dart';
 import 'package:language_cards/src/pages/settings_page.dart';
+import 'package:language_cards/src/pages/verbs_page.dart';
 
 class HomePage extends StatefulWidget {
   static final String routeName = 'home';
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,7 +14,9 @@ int currentIndex = 0;
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           style: Theme.of(context).textTheme.title,
         ),
       ),
-      body: _callPage(currentIndex),
+      body: _callPage(currentIndex, scaffoldKey),
       bottomNavigationBar: _crearBottomNavigationBar(),
     );
   }
@@ -62,12 +64,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _callPage(int paginaActual) {
+  _callPage(int paginaActual, GlobalKey<ScaffoldState> scaffoldKey) {
     switch (paginaActual) {
       case 0:
         return LessonsPage();
       case 1:
-        return LessonsPage();
+        return VerbsPage();
       case 2:
         return SettingsPage();
       default:

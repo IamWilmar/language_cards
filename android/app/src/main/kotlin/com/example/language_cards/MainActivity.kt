@@ -1,4 +1,4 @@
-package com.example.language_cards
+package com.SoloDev.language_cards
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
