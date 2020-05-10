@@ -23,11 +23,20 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final AdMobService admobService = AdMobService();
+  AdmobBanner _banner;
 
   @override
   void initState() {
     super.initState();
     Admob.initialize(admobService.getAdMobAppId());
+    _banner = createBanner();
+  }
+
+  AdmobBanner createBanner() {
+    return AdmobBanner(
+        adUnitId: admobService.getBannerAdId(),
+        adSize: AdmobBannerSize.BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {});
   }
 
   @override
@@ -44,7 +53,8 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
             appBar: AppBar(
               elevation: 0.0,
               backgroundColor: Colors.transparent,
-              title: Text(collection, style: Theme.of(context).textTheme.title),
+              title: Text(collection,
+                  style: Theme.of(context).textTheme.headline4),
             ),
             body: _verbsCards(collection, _screenSize),
           );
@@ -84,14 +94,11 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
           ),
         ],
       ),
-      padding: EdgeInsets.only(left: 2, top: 5.0, bottom: 5.0, right: 10),
-      margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      padding: EdgeInsets.only(left: 2, top: 5.0, bottom: 5.0, right: 9),
+      margin: EdgeInsets.only(right: 5.0, left: 5.0, top: 30.0),
       width: _screenSize.width * 1,
-      height: _screenSize.height * 0.15,
-      child: AdmobBanner(
-        adUnitId: admobService.getBannerAdId(),
-        adSize: AdmobBannerSize.FULL_BANNER,
-      ),
+      height: _screenSize.height * 0.13,
+      child: _banner,
     );
   }
 
@@ -113,7 +120,6 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
       borderRadius: BorderRadius.circular(20.0),
       child: GestureDetector(
         onTap: () {
-          print("hola");
           _mostrarSnackBar(context, verbs[index].verbEs, Colors.black);
         },
         child: Container(
@@ -136,14 +142,14 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
                   children: <Widget>[
                     Text(
                       "Pasado Participio: ",
-                      style: Theme.of(context).textTheme.display1,
+                      style: Theme.of(context).textTheme.headline3,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       textAlign: TextAlign.start,
                     ),
                     Text(
                       verbs[index].pastParticiple,
-                      style: Theme.of(context).textTheme.display1,
+                      style: Theme.of(context).textTheme.headline3,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -163,7 +169,7 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
       width: screenSize.width * 0.85,
       child: Text(
         verbs[index].infinitive,
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme.of(context).textTheme.headline2,
         overflow: TextOverflow.ellipsis,
         maxLines: 2,
         textAlign: TextAlign.center,
@@ -177,14 +183,14 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
       children: <Widget>[
         Text(
           "Pasado Simple: ",
-          style: Theme.of(context).textTheme.display1,
+          style: Theme.of(context).textTheme.headline3,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           textAlign: TextAlign.start,
         ),
         Text(
           verbs[index].simplePast,
-          style: Theme.of(context).textTheme.display1,
+          style: Theme.of(context).textTheme.headline3,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
@@ -202,7 +208,7 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
       backgroundColor: color,
       content: Text(
         wordEs,
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme.of(context).textTheme.headline2,
         textAlign: TextAlign.center,
       ),
       duration: Duration(milliseconds: 1000),

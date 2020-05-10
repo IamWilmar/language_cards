@@ -27,10 +27,45 @@ class VerbsPage extends StatelessWidget {
       children: <Widget>[
         _crearBotonRedondeado(
           context,
-          Colors.teal,
+          Colors.red,
           Icons.translate,
-          "Verbs",
-          'verbs',
+          "Verbos A2-B1 1",
+          'verbs A2B1 1',
+        ),
+        _crearBotonRedondeado(
+          context,
+          Colors.green,
+          Icons.translate,
+          "Verbos A2-B1 2",
+          'verbs A2B1 2',
+        ),
+        _crearBotonRedondeado(
+          context,
+          Colors.orange,
+          Icons.translate,
+          "Verbos A2-B1 3",
+          'verbs A2B1 3',
+        ),
+        _crearBotonRedondeado(
+          context,
+          Colors.amber,
+          Icons.translate,
+          "Verbos A2-B1 4",
+          'verbs A2B1 4',
+        ),
+        _crearBotonRedondeado(
+          context,
+          Colors.blue,
+          Icons.translate,
+          "Verbos A2-B1 5",
+          'verbs A2B1 5',
+        ),
+        _crearBotonRedondeado(
+          context,
+          Colors.purple,
+          Icons.translate,
+          "Verbos A2-B1 6",
+          'verbs A2B1 6',
         ),
         SizedBox(height: 300)
       ],

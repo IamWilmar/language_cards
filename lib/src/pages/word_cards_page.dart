@@ -33,11 +33,20 @@ class _WordCardsPageState extends State<WordCardsPage> {
   ];
 
   final AdMobService admobService = AdMobService();
+  AdmobBanner _banner;
 
   @override
   void initState() {
     super.initState();
     Admob.initialize(admobService.getAdMobAppId());
+    _banner = createBanner();
+  }
+
+  AdmobBanner createBanner() {
+    return AdmobBanner(
+        adUnitId: admobService.getBannerAdId(),
+        adSize: AdmobBannerSize.BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {});
   }
 
   final CollectionBloc collectionBloc = CollectionBloc();
@@ -64,7 +73,8 @@ class _WordCardsPageState extends State<WordCardsPage> {
             appBar: AppBar(
               elevation: 0.0,
               backgroundColor: Colors.transparent,
-              title: Text(collection, style: Theme.of(context).textTheme.title),
+              title: Text(collection,
+                  style: Theme.of(context).textTheme.headline1),
             ),
             body: wordSwiper(uid, collection, _screenSize),
           );
@@ -105,13 +115,10 @@ class _WordCardsPageState extends State<WordCardsPage> {
         ],
       ),
       padding: EdgeInsets.only(left: 2, top: 5.0, bottom: 5.0, right: 9),
-      margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      margin: EdgeInsets.only(right: 5.0, left: 5.0, top: 30.0),
       width: _screenSize.width * 1,
       height: _screenSize.height * 0.15,
-      child: AdmobBanner(        
-        adUnitId: admobService.getBannerAdId(),
-        adSize: AdmobBannerSize.FULL_BANNER,
-      ),
+      child: _banner,
     );
   }
 
@@ -173,7 +180,7 @@ class _WordCardsPageState extends State<WordCardsPage> {
                   width: screenSize.width * 0.85,
                   child: Text(
                     words[index].wordEn,
-                    style: Theme.of(context).textTheme.subhead,
+                    style: Theme.of(context).textTheme.headline2,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     textAlign: TextAlign.center,
@@ -197,7 +204,7 @@ class _WordCardsPageState extends State<WordCardsPage> {
       backgroundColor: color,
       content: Text(
         wordEs,
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme.of(context).textTheme.headline2,
         textAlign: TextAlign.center,
       ),
       duration: Duration(milliseconds: 1000),

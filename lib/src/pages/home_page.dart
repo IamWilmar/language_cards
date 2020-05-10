@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 int currentIndex = 0;
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text(
           'Language cards',
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline4,
         ),
       ),
       body: _callPage(currentIndex, scaffoldKey),
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       items: [
         bottomBarItem(Icons.home, 'Words'),
         bottomBarItem(Icons.chrome_reader_mode, 'Verbs'),
-        bottomBarItem(Icons.settings, 'Settings'),
+        bottomBarItem(Icons.sort_by_alpha, 'Grammar'),
       ],
     );
   }
