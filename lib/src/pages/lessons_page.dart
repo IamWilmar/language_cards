@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:language_cards/src/bloc/colletion_bloc.dart';
+import 'package:language_cards/src/pages/tenses/tense_description_page.dart';
 import 'package:language_cards/src/pages/word_cards_page.dart';
 import 'package:language_cards/src/services/admob_service.dart';
 import 'package:language_cards/src/shared_prefs/preferencias_usuario.dart';
@@ -47,15 +48,24 @@ class _LessonsPageState extends State<LessonsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          //_botonesRedondeados(context),
-          SizedBox(height: 20),
-          _lessonVault(context),
-        ],
-      ),
+    return Stack(
+      children: <Widget>[
+        DescriptionPage().background(context),
+        _pageContent(context),
+      ],
     );
+  }
+
+  SingleChildScrollView _pageContent(BuildContext context) {
+    return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        //_botonesRedondeados(context),
+        SizedBox(height: 20),
+        _lessonVault(context),
+      ],
+    ),
+  );
   }
 
   Widget _lessonVault(BuildContext context) {
@@ -182,6 +192,10 @@ class _LessonsPageState extends State<LessonsPage> {
         height: _screenSize.height * 0.25,
         margin: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
+          border: Border.all(
+            width: 0.8,
+            color: (state[unitNumber] == false) ? Colors.grey[400] : color,
+          ),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black26,

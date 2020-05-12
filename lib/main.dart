@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:language_cards/src/pages/home_page.dart';
+import 'package:language_cards/src/pages/tenses/future_page.dart';
+import 'package:language_cards/src/pages/tenses/past_page.dart';
+import 'package:language_cards/src/pages/tenses/present_page.dart';
+import 'package:language_cards/src/pages/tenses/tense_description_page.dart';
 import 'package:language_cards/src/pages/verbs_card_page.dart';
 import 'package:language_cards/src/pages/word_cards_page.dart';
 import 'package:language_cards/src/shared_prefs/preferencias_usuario.dart';
@@ -25,6 +29,10 @@ class MyApp extends StatelessWidget {
         HomePage.routeName: (BuildContext context) => HomePage(),
         WordCardsPage.routeName: (BuildContext context) => WordCardsPage(),
         VerbsCardPage.routeName: (BuildContext context) => VerbsCardPage(),
+        PresentPage.routeName: (BuildContext context) => PresentPage(),
+        PastPage.routeName: (BuildContext context) => PastPage(),
+        FuturePage.routeName: (BuildContext context) => FuturePage(),
+        DescriptionPage.routeName: (BuildContext context) => DescriptionPage(),
       },
       theme: ThemeData(
         secondaryHeaderColor: Colors.black,
@@ -35,7 +43,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           headline1: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.w100,
+              fontWeight: FontWeight.w200,
               fontSize: 50.0,
               letterSpacing: 1.5),
           button: TextStyle(
@@ -54,10 +62,17 @@ class MyApp extends StatelessWidget {
               fontSize: 20.0,
               letterSpacing: 1.5),
           headline4: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w100,
-              fontSize: 30.0,
-              letterSpacing: 1.5),
+            color: Colors.black,
+            fontWeight: FontWeight.w100,
+            fontSize: 30.0,
+            letterSpacing: 1.5,
+          ),
+          headline5: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontSize: 30.0,
+            letterSpacing: 1.5,
+          ),
         ),
       ),
     );

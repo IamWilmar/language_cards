@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text(
           'Language cards',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headline5,
         ),
       ),
       body: _callPage(currentIndex, scaffoldKey),

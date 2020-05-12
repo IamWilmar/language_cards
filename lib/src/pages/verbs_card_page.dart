@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:language_cards/src/bloc/colletion_bloc.dart';
 import 'package:language_cards/src/models/verbs_model.dart';
+import 'package:language_cards/src/pages/tenses/tense_description_page.dart';
 import 'package:language_cards/src/services/admob_service.dart';
 import 'package:language_cards/src/services/database.dart';
 
@@ -54,9 +55,14 @@ class _VerbsCardPageState extends State<VerbsCardPage> {
               elevation: 0.0,
               backgroundColor: Colors.transparent,
               title: Text(collection,
-                  style: Theme.of(context).textTheme.headline4),
+                  style: Theme.of(context).textTheme.headline5),
             ),
-            body: _verbsCards(collection, _screenSize),
+            body: Stack(
+              children: <Widget>[
+                DescriptionPage().background(context),
+                _verbsCards(collection, _screenSize),
+              ],
+            ),
           );
         });
   }

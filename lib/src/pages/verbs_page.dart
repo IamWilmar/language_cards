@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:language_cards/src/bloc/colletion_bloc.dart';
+import 'package:language_cards/src/pages/tenses/tense_description_page.dart';
 import 'package:language_cards/src/pages/verbs_card_page.dart';
 import 'package:language_cards/src/services/database.dart';
 
@@ -10,15 +11,24 @@ class VerbsPage extends StatelessWidget {
   final CollectionBloc collectionBloc = CollectionBloc();
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          //_botonesRedondeados(context),
-          SizedBox(height: 20),
-          _verbsVault(context),
-        ],
-      ),
+    return Stack(
+      children: <Widget>[
+        DescriptionPage().background(context),
+        _pageContent(context),
+      ],
     );
+  }
+
+  SingleChildScrollView _pageContent(BuildContext context) {
+    return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        //_botonesRedondeados(context),
+        SizedBox(height: 20),
+        _verbsVault(context),
+      ],
+    ),
+  );
   }
 
   Widget _verbsVault(BuildContext context) {
@@ -86,6 +96,10 @@ class VerbsPage extends StatelessWidget {
         height: _screenSize.height * 0.25,
         margin: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
+          border: Border.all(
+            width: 0.8,
+            color: color,
+          ),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black26,

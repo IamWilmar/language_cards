@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:language_cards/src/models/examples_model.dart';
+import 'package:language_cards/src/models/grammar_model.dart';
 import 'package:language_cards/src/models/verbs_model.dart';
 import 'package:language_cards/src/models/words_model.dart';
 
@@ -40,6 +42,23 @@ class DatabaseService {
     }).toList();
   }
 
+  GrammarModel _grammarListFromSnapshot(DocumentSnapshot snapshot) {
+    GrammarModel grammar = GrammarModel(
+      estructure: snapshot.data['estructure'],
+      explanation: snapshot.data['explanation'],
+    );
+    return grammar;
+  }
+
+  ExamplesModel _exampleListFromSnapshot(DocumentSnapshot snapshot) {
+    ExamplesModel examples = ExamplesModel(
+      afirmacion    : snapshot.data['afirmacion'],
+      interrogacion : snapshot.data['interrogacion'],
+      negacion      : snapshot.data['negacion'],
+    );
+    return examples;
+  }
+
   Stream<List<WordsModel>> obtenerPalabras(String id, String collection) {
     return wordsColletion
         .document(id)
@@ -54,5 +73,23 @@ class DatabaseService {
         .collection(collection)
         .snapshots()
         .map(_verbsListFromSnapshot);
+  }
+
+  Stream<GrammarModel> obtenerGramatica(String id, String collection) {
+    return wordsColletion
+        .document(id)
+        .collection(collection)
+        .document('grammar_rules')
+        .snapshots()
+        .map(_grammarListFromSnapshot);
+  }
+
+    Stream<ExamplesModel> obtenerEjemplos(String id, String collection) {
+    return wordsColletion
+        .document(id)
+        .collection(collection)
+        .document('examples')
+        .snapshots()
+        .map(_exampleListFromSnapshot);
   }
 }

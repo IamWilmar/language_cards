@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:language_cards/src/bloc/colletion_bloc.dart';
 import 'package:language_cards/src/models/words_model.dart';
+import 'package:language_cards/src/pages/tenses/tense_description_page.dart';
 import 'package:language_cards/src/services/database.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:language_cards/src/services/admob_service.dart';
@@ -76,7 +77,12 @@ class _WordCardsPageState extends State<WordCardsPage> {
               title: Text(collection,
                   style: Theme.of(context).textTheme.headline1),
             ),
-            body: wordSwiper(uid, collection, _screenSize),
+            body:Stack(
+              children: <Widget>[
+                DescriptionPage().background(context),
+                 wordSwiper(uid, collection, _screenSize),
+              ],
+            ),
           );
         });
   }
